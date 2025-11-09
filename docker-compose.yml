@@ -1,0 +1,67 @@
+<<<<<<< HEAD
+services:
+  solr:
+    image: solr:9
+    ports:
+      - "8983:8983"
+
+  milvus:
+    image: milvusdb/milvus:latest
+    ports:
+      - "19530:19530"
+
+  indexer:
+    build: ./services/indexer
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - solr
+      - milvus
+
+
+  api:
+    build: ./services/api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - solr
+      - milvus
+
+  evaluator:
+    build: ./services/evaluator
+    depends_on:
+      - api
+=======
+services:
+  solr:
+    image: solr:9
+    ports:
+      - "8983:8983"
+
+  milvus:
+    image: milvusdb/milvus:latest
+    ports:
+      - "19530:19530"
+
+  indexer:
+    build: ./services/indexer
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - solr
+      - milvus
+
+
+  api:
+    build: ./services/api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - solr
+      - milvus
+
+  evaluator:
+    build: ./services/evaluator
+    depends_on:
+      - api
+>>>>>>> 039a1b92ea6502fc592a4d29a55693bac426c6b4
