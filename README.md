@@ -10,7 +10,7 @@ Este proyecto implementa y compara dos pipelines de **Retrieval-Augmented Genera
 docker-compose up --build
 ```
 ## Conexiones creadas para ingresar
-#Solar
+ **Solar
 http://localhost:8983/solr/#/rag_collection/query
-#API
+ **API
 http://localhost:8080/docs
