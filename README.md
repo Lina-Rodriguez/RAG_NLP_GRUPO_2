@@ -9,11 +9,8 @@ Este proyecto implementa y compara dos pipelines de **Retrieval-Augmented Genera
 ```bash
 docker-compose up --build
 ```
-## Concultas
-```bash
-curl -X POST "http://localhost:8000/ask" \
-     -H "Content-Type: application/json" \
-     -d '{"query":"¿Qué efectos tuvo el conflicto armado en las mujeres?", "backend":"milvus", "k":5}'
-```
-##Evaluacion
-docker compose run evaluator
+## Conexiones creadas para ingresar
+#Solar
+http://localhost:8983/solr/#/rag_collection/query
+#API
+http://localhost:8080/docs
