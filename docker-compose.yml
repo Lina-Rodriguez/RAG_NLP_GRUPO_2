@@ -1,15 +1,61 @@
-<<<<<<< HEAD
+version: "3.8"
+
 services:
   solr:
     image: solr:9
+    container_name: rag-solr
     ports:
       - "8983:8983"
 
-  milvus:
-    image: milvusdb/milvus:latest
-    ports:
-      - "19530:19530"
+  # ---------- Milvus: etcd ----------
+  etcd:
+    container_name: milvus-etcd
+    image: quay.io/coreos/etcd:v3.5.5
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    volumes:
+      - ./milvus/etcd:/etcd
+    command: >
+      etcd
+      -advertise-client-urls=http://127.0.0.1:2379
+      -listen-client-urls http://0.0.0.0:2379
+      --data-dir /etcd
 
+  # ---------- Milvus: MinIO ----------
+  minio:
+    container_name: milvus-minio
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: minio server /minio_data --console-address ":9001"
+    ports:
+      - "9001:9001"   # consola web de MinIO (opcional)
+      - "9000:9000"   # puerto de S3
+    volumes:
+      - ./milvus/minio:/minio_data
+
+  # ---------- Milvus: servidor standalone ----------
+  milvus:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.4.0
+    command: ["milvus", "run", "standalone"]
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio:9000
+    volumes:
+      - ./milvus/milvus:/var/lib/milvus
+    depends_on:
+      - etcd
+      - minio
+    ports:
+      - "19530:19530"  # gRPC de Milvus (lo que usa pymilvus)
+      - "9091:9091"    # healthcheck HTTP (opcional)
+
+  # ---------- Indexador ----------
   indexer:
     build: ./services/indexer
     volumes:
@@ -18,7 +64,7 @@ services:
       - solr
       - milvus
 
-
+  # ---------- API RAG ----------
   api:
     build: ./services/api
     ports:
@@ -27,41 +73,8 @@ services:
       - solr
       - milvus
 
+  # ---------- Evaluador ----------
   evaluator:
     build: ./services/evaluator
     depends_on:
       - api
-=======
-services:
-  solr:
-    image: solr:9
-    ports:
-      - "8983:8983"
-
-  milvus:
-    image: milvusdb/milvus:latest
-    ports:
-      - "19530:19530"
-
-  indexer:
-    build: ./services/indexer
-    volumes:
-      - ./data:/app/data
-    depends_on:
-      - solr
-      - milvus
-
-
-  api:
-    build: ./services/api
-    ports:
-      - "8000:8000"
-    depends_on:
-      - solr
-      - milvus
-
-  evaluator:
-    build: ./services/evaluator
-    depends_on:
-      - api
->>>>>>> 039a1b92ea6502fc592a4d29a55693bac426c6b4
