@@ -15,13 +15,14 @@ http://solr:8983/solr/rag_collection/select
 http://milvus:19530/rag_collection
 - **API**
 http://localhost:8080/docs
+
 se debe ver así:
-<img width="1919" height="618" alt="Captura de pantalla 2025-11-09 122330" src="https://github.com/user-attachments/assets/da7262d1-5ab2-4535-baff-cf3ddbdeb701" />
+<img width="920" height="618" alt="Captura de pantalla 2025-11-09 122330" src="https://github.com/user-attachments/assets/da7262d1-5ab2-4535-baff-cf3ddbdeb701" />
 
-<img width="925" height="618" alt="Captura de pantalla 2025-11-09 222741" src="https://github.com/user-attachments/assets/d827fc95-48ab-4962-9bd8-54dde1ec2291" />
+<img width="920" height="618" alt="Captura de pantalla 2025-11-09 222741" src="https://github.com/user-attachments/assets/d827fc95-48ab-4962-9bd8-54dde1ec2291" />
 
 
-Una vez esten funcionales las colecciones se puede ejecutar desde la shell los siguientes comandos
+Una vez esten funcionales las colecciones se puede ejecutar desde la shell los siguientes comandos para realizar consultas:
 
 **1.** JSON de la consulta:
 ```bash
