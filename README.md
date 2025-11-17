@@ -17,6 +17,7 @@ http://milvus:19530/rag_collection
 http://localhost:8080/docs
 
 Una vez esten funcionales las colecciones se puede ejecutar desde la shell los siguientes comandos
+
 **1.** JSON de la consulta:
 ```bash
 $json = '{ "query": "¿Qué efectos tuvo el conflicto armado en las mujeres?", "backend": "milvus", "k": 5 }'
