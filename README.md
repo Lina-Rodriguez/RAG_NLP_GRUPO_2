@@ -16,12 +16,12 @@ http://milvus:19530/rag_collection
 - **API**
 http://localhost:8080/docs
 
-Una vez esten funcionales las colecciones se puede ejecutar desde la shell los siguientes        ## Comandos
-1. JSON de la consulta:
+Una vez esten funcionales las colecciones se puede ejecutar desde la shell los siguientes comandos
+**1.** JSON de la consulta:
 ```bash
 $json = '{ "query": "¿Qué efectos tuvo el conflicto armado en las mujeres?", "backend": "milvus", "k": 5 }'
 ```
-2. Invocar la API:
+**2.** Invocar la API:
 ```bash
 Invoke-RestMethod -Uri "http://localhost:8000/ask" -Method Post -ContentType "application/json" ` -Body $json
 ```
