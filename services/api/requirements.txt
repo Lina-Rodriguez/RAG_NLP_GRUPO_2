@@ -1,7 +1,13 @@
 fastapi==0.110.0
 uvicorn[standard]==0.29.0
 requests==2.31.0
+
+# Milvus + dependencias
 pymilvus==2.4.0
+marshmallow<4
+
+# Embeddings (Sentence Transformers)
 sentence-transformers==2.2.2
 torch==2.2.0
-transformers==4.37.0
+numpy<2.0.0
+huggingface_hub==0.25.2
